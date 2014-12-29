@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>艺生活</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="pragma" content="no-cache" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="format-detection" content="telephone=no"/>
+<link rel="stylesheet" href="<?php echo $path;?>css/reset.css" type="text/css">
+<link rel="stylesheet" href="<?php echo $path;?>css/layout.css" type="text/css">
+<script src="<?php echo $path;?>js/jquery.js"></script>
+<script type="text/javascript">
+	$(function(){
+		$(".allice_addbtn").click(function(){
+			$(".popupbox_allice_add").fadeIn();
+		});
+		$(".popupbox_allice_add .pop_sub").click(function(){
+			//后台在此处添加联盟申请提交资料
+			$(".popupbox_allice_add").fadeOut();
+			$(".popupbox_allice_add_success").fadeIn();
+		});
+		$(".popupbox_allice_add_success .pop_sub").click(function(){
+			$(".popupbox_allice_add_success").fadeOut();
+		});
+		$(".popupbox .close,.popupbox .popbtn_cancel").click(function(){
+			$(this).closest(".popupbox").fadeOut();
+		});
+                
+                $(".mengyou_pause").click(function(){
+			$(".popup_my_pause").fadeIn();
+		});
+		$(".popup_my_pause .pop_sub").click(function(){
+			//后台在此处添加暂停联盟信息
+			$(".popup_my_pause").fadeOut();
+		});
+                
+	});
+</script>
+</head>
+<body>
+	<div class="topbar">
+		<div class="ficon"></div>
+		<div class="topmenu">
+			<div class="topmenu_r"><a href="hezuoqingqiu_xinjian.html">新建合作请求</a></div>
+			<ul>
+                                <li class="active"><a href="<?php echo $dir; ?>index/index">所有组织</a></li>
+				<li><a href="<?php echo $dir; ?>myfriends/index">合作伙伴</a></li>
+				<li><a href="gonggongxiaoxi.html">公共消息</a></li>
+				<li><a href="wodeqingqiu.html">查看请求</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="leftbar">
+		<div class="logo"><img src="images/logo.jpg" alt="" /></div>
+		<div class="lmenu">
+			<ul>
+				<li><a href=""><i class="icon_l1"></i>我的帐号</a></li>
+				<li><a href=""><i class="icon_l2"></i>项目管理</a></li>
+				<li><a href=""><i class="icon_l3"></i>发布中心</a></li>
+				<li><a href=""><i class="icon_l4"></i>客户管理</a></li>
+				<li><a href=""><i class="icon_l5"></i>产品营销</a></li>
+				<li class="active"><a href=""><i class="icon_l6"></i>联盟合作</a></li>
+			</ul>
+		</div>
+		<div class="exit"><a href="">退出</a></div>
+	</div>

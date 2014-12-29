@@ -1,0 +1,279 @@
+<?php $this->partial("public/header"); ?>
+
+<div class="container">
+    <div class="main_tit">所有组织</div>
+    <div class="searchbox">
+        <div class="searchbox_c">
+            <div class="searchtype">
+                <form action="<?php echo $dir; ?>index/index" method="post">
+                    <select name="teamtype" class="search_sel" id="">
+                        <option value="1" <?php if ($teamtype == '1') { ?> selected="selected" <?php } ?> >组织名称</option>
+                        <option value="2" <?php if ($teamtype == '2') { ?> selected="selected" <?php } ?>>组织类型</option>
+                    </select>
+                    <input type="text" name="typename" value="<?php echo $typename; ?>" class="search_ipt" />
+
+                    <input type="submit" name="subtype"  value="搜索组织" class="search_btn">
+                </form>
+            </div>
+            <!--</button>-->
+            <br>
+            <div style="font-size: 12px;color:red;font-weight: bold;">  <?php echo $error_mess; ?></div>
+        </div>
+
+    </div><?php echo $this->getContent(); ?>
+    <div class="main">
+        <div class="zuzhi_tab">
+
+            <?php
+            if (is_array($data)) {
+                foreach ($data as $k => $v) {
+                    ?>
+                    <div class="zuzhili">
+                        <div class="zuzhili_span w15"><img src="<?php echo $path; ?>images/clogo.jpg" alt="" /></div>
+                        <div class="zuzhili_span w15"><p class="big black"><?php echo $k; ?></p></div>
+                        <div class="zuzhili_span w30 tl">
+                            <p style="font-size: 11px;font-weight: bold;"><?php echo $v['label']; ?></p>
+                            <p><?php echo $v['address']; ?></p>
+                            <div class="b mt10">
+                                <span class="tab_fl">共同盟友：</span>
+                                <div class="menyoulist">
+                                    <ul>
+                                        <?php
+                                        if (!empty($v['friend'])) {
+                                            foreach ($v['friend'] as $fk => $c) {
+                                                ?>
+                                                <li>
+                                                    <?php
+                                                    echo $c['allyname'];
+                                                    if ($fk == '6') {
+                                                        break;
+                                                    }
+                                                    ?>
+                                                </li>
+                                                <?php
+                                            }
+                                        } else {
+                                            ?>
+                                            <li>暂无</li>
+                                        <?php } ?>
+                                    </ul>
+                                </div>
+                                <div class="muuids" >
+                                    <button  name="mored" value='<?php echo $v['uuid']; ?>' class="more">更多</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="zuzhili_span w20">
+                            <div class="ecodeli"><img src="<?php echo $path; ?>images/ecode.jpg" alt="" />微博粉丝 <span><?php echo $v['wbcount']; ?></span></div>
+                            <div class="ecodeli"><img src="<?php echo $path; ?>images/ecode.jpg" alt="" />微信粉丝 <span><?php echo $v['wxcount']; ?></span></div>
+                        </div>
+                        <div class="zuzhili_span w20">
+                            <?php if ($v['ismyf'] == '1') { ?>                        
+                                <a class="btn_big allice_ysmy">已是盟友</a>                        
+                            <?php } else { ?>
+                                <div id="addm">
+                                    <!--<a   class="btn_big allice_addbtn">加为盟友</a>-->
+                                    <button  value='<?php echo $v['uuid']; ?>' class="btn_big allice_addbtn">加为盟友</button>
+                                </div>
+                            <?php } ?>
+                        </div>
+                    </div>
+                    <?php
+                }
+            } else {
+                ?>
+                <div class="zuzhili">
+                    <div style="text-align: center;margin-top: 20px;">   
+                        <?php echo $data; ?>
+                    </div>
+                </div>
+            <?php } ?>
+
+        </div>
+    </div>
+</div>
+<div class="popupbox popupbox_allice_add">
+    <div class="popupbox_c">
+        <div class="pop_tit"><div class="close"></div>加为盟友</div>
+        <div class="pop_c">
+            <div class="pop_c_li">
+                <div class="pop_c_li_tit">您的名片信息：</div>
+                <div class="mingpianbox" id="myinfor">
+<!--                    <div class="mp_img"><img src="images/mingpian.jpg" alt="" /></div>
+                    <div class="mp_c">
+                        <h2>今日美术馆</h2>
+                        <div class="mp_main">
+                            <h2>美术馆</h2>
+                            <p>北京市朝阳区世贸天阶时尚大厦18层<br />58760600</p>
+                        </div>
+                    </div>
+                    <div class="mp_r">
+                        <div class="mp_ecodeli"><img src="images/ecode.jpg" alt="" /><span>微信粉丝 35K</span></div>
+                        <div class="mp_ecodeli"><img src="images/ecode.jpg" alt="" /><span>微信粉丝 56K</span></div>
+                    </div>-->
+                </div>
+            </div>
+            <div class="pop_c_li">
+                <div class="pop_c_li_tit">设定盟友类型：</div>
+                <div class="allicetypebox">
+                    <div class="allicetypebox_l">
+                        <div class="allicetype_radioli"><input type="radio" value="1" name="rf" checked="checked" /> 普通盟友</div>
+                        <div class="allicetype_radioli"><input type="radio" value="2" name="rf" /> 查看权限</div>
+                        <div class="allicetype_radioli"><input type="radio" value="3" name="rf"/> 编辑权限</div>
+                    </div>
+                    <div class="allicetypebox_r">
+                        <h2>普通盟友</h2>
+                        <p>加为盟友后，盟友间可进行活动推广<br />（鼠标移动到左边每个选择时，此处则变化为对应的文字内容。）</p>
+                    </div>
+                </div>
+            </div>
+            <div class="pop_c_li">
+                <div class="pop_c_li_tit">自定义消息：</div>
+                <div class="zdy_msg">
+                  
+                </div>
+            </div>
+        </div>
+        <div class="pop_op">
+            <button class="popbtn popbtn_cancel">取消</button>
+            <button class="popbtn btn_big pop_sub" id="request_f">发送请求</button>
+        </div>
+        <div class="pop_memo tr">点击发送请求后，对方将收到您的名片信息及自定义消息</div>
+    </div>
+</div>
+
+<div class="popupbox popupbox_allice_add_success">
+    <div class="popupbox_c">
+        <div class="pop_tit"><div class="close"></div>盟友请求已发送</div>
+        <div class="pop_c">
+            <div class="pop_txt">
+                <p>您对 <span class="fb"></span> 的盟友请求已发送。请耐心等待对方的审批。您可以在 <a href="">我的请求</a> 查看对方通过或拒绝此请求的状态更新。</p>
+            </div>
+            <div class="pop_links">
+                <a href="<?php echo $path; ?>index/index">查看所有组织</a>
+                <a href="">查看我的盟友</a>
+                <a href="">查看我的请求</a>
+            </div>
+        </div>
+        <div class="pop_op">
+            <button class="popbtn btn_big pop_sub">知道了</button>
+        </div>
+    </div>
+</div>
+
+<div class="popupbox friend_more">
+    <div class="popupbox_c">
+        <div class="pop_tit"><div class="close"></div>更多盟友</div>
+        <div class="pop_c">
+            <div class="pop_txt">
+                <p>这里是您和该用户所有的共同盟友。</p>
+            </div>
+            <div class="pop_links" id="moref">
+            </div>
+        </div>
+        <!--        <div class="pop_op">
+                    <button class="popbtn btn_big pop_sub">知道了</button>
+                </div>-->
+    </div>
+</div>
+</body>
+</html>	
+<script>
+
+    var dir = "<?php echo $path; ?>";
+//获取我的信息
+    $('#addm button').click(function() {
+        $(this).parent().each(function() {//移除其余非点中状态
+        });
+        var merid = $(this).val();
+        $.ajax({
+            type: 'GET',
+            url: dir + 'index/getMyInfor',
+            data: 'merid=' + merid,
+            dataType: 'json',
+            success: function(data) {
+                var strHTML = '';
+                var fidHTML = '';
+                var infor = data.infor;
+                var id = data.id;
+                var fid = data.fid;
+                var ownname = '';
+                $.each(infor, function(k, v) {
+                    ownname = v['name']
+                    strHTML += '<div class="mp_img"><img src="<?php echo $path; ?>images/mingpian.jpg" alt="" /></div>';
+                    strHTML += '<div class="mp_c">';
+                    strHTML += '<h2>' + v['name'] + '</h2>';
+                    strHTML += '<div class="mp_main">';
+                    strHTML += '<h2>' + v['label'] + '</h2>';
+                    strHTML += '<p>' + v['address'] + '</p>';
+                    strHTML += '</div></div><div class="mp_r">';
+                    strHTML += ' <div class="mp_ecodeli"><img src="<?php echo $path; ?>images/ecode.jpg" alt="" /><span>微信粉丝' + v['wxcount'] + '</span></div>'
+                    strHTML += ' <div class="mp_ecodeli"><img src="<?php echo $path; ?>images/ecode.jpg" alt="" /><span>微博粉丝' + v['wbcount'] + '</span></div>'
+                    strHTML += '</div>';
+                });
+                strHTML += '<input type="hidden" id="whoid" value=' + id + '>';
+                $("#myinfor").html(strHTML)
+                 fidHTML +='<textarea name="" id="" cols="30" rows="10" class="pop_ta">';
+                 fidHTML +='致'+fid+':';
+                 fidHTML +='&nbsp;&nbsp;&nbsp;&nbsp;您好，'+ownname+'希望成为您的盟友，烦请批准通过。如有任何问题，请立即联系我们。';
+                 fidHTML +='&nbsp;&nbsp;&nbsp;&nbsp;顺颂商祈&nbsp;&nbsp;&nbsp;&nbsp;';
+                 fidHTML += ownname+'敬上';
+                 fidHTML +='</textarea>';
+                $(".zdy_msg").html(fidHTML)
+//                	console.log(data);
+            }
+        });
+    })
+    //获取更多共同盟友
+    $('.muuids button').click(function() {
+        $(this).parent().each(function() {//移除其余非点中状态
+        });
+        $(".friend_more").fadeIn();
+        var muuid = $(this).val();
+        $.ajax({
+            type: 'GET',
+            url: dir + 'index/getMoreAlly',
+            data: 'uuid=' + muuid,
+            dataType: 'json',
+            success: function(data) {
+                var strHTML = '';
+                $.each(data, function(k, v) {
+                    strHTML += "<div style='margin:3px 5px 3px 5px;float:left;font-weight:bold;'>" + v + "</div>";
+                });
+                $("#moref").html(strHTML)
+//                	console.log(data);
+            }
+        });
+    })
+
+//申请好友请求
+ $("#request_f").click(function() {
+        var retype = "";
+        var messq = "";
+        var merid = ""
+        $("input[name=rf]").each(function() {
+            if ($(this).attr("checked")) {
+                retype += $(this).val() + ",";
+            }
+        });
+        if (retype.length > 0) { //如果获取到
+            retype = retype.substring(0, retype.length - 1); //把最后一个逗号去掉
+        }
+        messq = $(".pop_ta").val();
+        merid = $("#whoid").val();
+        var dir = "<?php echo $path; ?>";
+        $.ajax({
+            type: 'POST',
+            url: dir + 'index/addFriend',
+            data: 'quest_type=' + retype + '&message=' + messq + '&merid=' + merid,
+            dataType: 'json',
+            success: function(data) {
+                var strHTML = '';
+                strHTML += data;
+                $(".fb").html(strHTML)
+            }
+        });
+        console.log(retype);
+
+    });
+</script>

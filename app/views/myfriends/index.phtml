@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>艺生活</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta http-equiv="pragma" content="no-cache" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+        <meta name="format-detection" content="telephone=no"/>
+        <link rel="stylesheet" href="<?php echo $path; ?>css/reset.css" type="text/css">
+        <link rel="stylesheet" href="<?php echo $path; ?>css/layout.css" type="text/css">
+        <script src="<?php echo $path; ?>js/jquery.js"></script>
+     
+    </head>
+    <body>
+        <div class="topbar">
+            <div class="ficon"></div>
+            <div class="topmenu">
+                <div class="topmenu_r"><a href="hezuoqingqiu_xinjian.html">新建合作请求</a></div>
+                <ul>
+                    <li><a href="<?php echo $dir; ?>index/index">所有组织</a></li>
+                    <li class="active"><a href="<?php echo $dir; ?>myfriends/index">合作伙伴</a></li>
+                    <li><a href="gonggongxiaoxi.html">公共消息</a></li>
+                    <li><a href="wodeqingqiu.html">查看请求</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="leftbar">
+            <div class="logo"><img src="images/logo.jpg" alt="" /></div>
+            <div class="lmenu">
+                <ul>
+                    <li><a href=""><i class="icon_l1"></i>我的帐号</a></li>
+                    <li><a href=""><i class="icon_l2"></i>项目管理</a></li>
+                    <li><a href=""><i class="icon_l3"></i>发布中心</a></li>
+                    <li><a href=""><i class="icon_l4"></i>客户管理</a></li>
+                    <li><a href=""><i class="icon_l5"></i>产品营销</a></li>
+                    <li class="active"><a href=""><i class="icon_l6"></i>联盟合作</a></li>
+                </ul>
+            </div>
+            <div class="exit"><a href="">退出</a></div>
+        </div>
+        <div class="container"><?php echo $this->getContent(); ?>
+            <div class="main_tit">我的盟友</div>
+            <div class="searchbox">
+                <div class="searchbox_c">
+                    <form action="<?php echo $dir; ?>myfriends/index" method="post">
+                    <div class="searchtype">
+                        <input type="text" class="search_ipt" name="my" value="<?php echo $getally; ?>" />
+                    </div>
+                    <button type="submit" class="search_btn">搜索盟友</button>
+                    </form>
+                     <br>
+                    <div style="font-size: 12px;color:red;font-weight: bold;">  <?php echo $error_mess; ?></div>
+                </div>
+               
+            </div>
+            <div class="main">
+                <div class="zuzhi_tab">
+                    <?php  if(is_array($data)){ ?>
+                    <?php foreach ($data as $da) { ?>
+                            <?php if ($da['allystatus'] == '0') { ?>
+                                <div class="zuzhili zuzhili_menyouli_pause">
+                            <?php } else { ?>
+                                <div class="zuzhili">
+                            <?php } ?>
+                                <div class="zuzhili_span w10"><img src="images/clogo.jpg" alt="" /></div>
+                                <div class="zuzhili_span w10"><p class="big black"><?php echo $da['name']; ?></p>
+                                    <?php if ($da['allystatus'] == '1') { ?>
+                                        <p>普通盟友</p>
+                                    <?php } elseif ($da['allystatus'] == '2') { ?>
+                                        <p>查看权限</p>
+                                    <?php } elseif ($da['allystatus'] == '3') { ?>
+                                        <p>编辑权限</p>
+                                    <?php } ?>
+                                </div>
+                                <div class="zuzhili_span w25 tl">
+                                    <p><?php echo $da['label']; ?></p>
+                                    <br />
+                                    <p><?php echo $da['address']; ?></p>
+                                </div>
+                                <div class="zuzhili_span w20">
+                                    <div class="ecodeli"><img src="images/ecode.jpg" alt="" />微博粉丝 <span><?php echo $da['wbcount']; ?></span></div>
+                                    <div class="ecodeli"><img src="images/ecode.jpg" alt="" />微信粉丝 <span><?php echo $da['wxcount']; ?></span></div>
+                                </div>
+                                <div class="zuzhili_span w20">
+                                    <textarea name="" id="" cols="30" rows="10" class="memo_edit">编辑备注信息</textarea>
+                                </div>
+                                <div class="zuzhili_span w15">
+                                    <?php if ($da['allystatus'] == '1') { ?>
+<!--                                    <a href="javascript:void(0);" class="mengyou_pause" >暂停盟友
+                                             <input type="hidden" value="<?php echo $da['name']; ?>" name="uname">
+                                            <input type="hidden" value="<?php echo $da['uuid']; ?>" name="uid">
+                                    </a>-->
+                                    <div class='mengyou_pause'>
+                                        <button type="button" value="<?php echo $da['name'].'^'.$da['uuid']; ?>">暂停盟友</button>
+                                        </div>
+                                     <?php } elseif ($da['allystatus'] == '0') { ?>
+                                        <h2>盟友已暂停</h2>
+                                        <a href="" class="mengyou_huifu">恢复盟友</a>
+                                    <?php } ?>
+                                     
+                                </div>
+                            </div>
+                        <?php } ?>
+                        <?php }else{ ?>
+                                     <div class="zuzhili">
+                                        <div style="text-align: center;margin-top: 20px;">   
+                                            <?php echo $data; ?>
+                                        </div>
+                                    </div>
+                          <?php } ?>          
+                     
+                    </div>
+                </div>
+            </div>
+            <div class="popupbox popup_my_pause">
+                <div class="popupbox_c">
+                    <div class="pop_tit"><div class="close"></div>暂停盟友关系</div>
+                    <div class="pop_c my">
+                        <p class="text_l">立刻暂停与时尚集团的盟友关系？</p>
+                        <p>（盟友关系是可恢复的。）</p>
+                    </div>
+                    <div class="pop_op">
+                        <button class="popbtn popbtn_cancel">取消</button>
+                        <button class="popbtn btn_big pop_sub">确定</button>
+                    </div>
+                </div>
+            </div>
+    </body>
+</html>	
+
+       <script type="text/javascript">
+            $(function() {
+                $(".popupbox .close,.popupbox .popbtn_cancel").click(function() {
+                    $(this).closest(".popupbox").fadeOut();
+                });
+
+                $(".mengyou_pause button").click(function() {
+                    $(".popup_my_pause").fadeIn();
+                   $(this).parent().each(function() {//移除其余非点中状态
+                    });
+                    var merid = $(this).val();
+                    console.log(merid);
+                });
+                $(".popup_my_pause .pop_sub").click(function() {
+                    //后台在此处添加暂停联盟信息
+                    $(".popup_my_pause").fadeOut();
+                });
+
+            });
+        </script>
